@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 def transform_data(data: pd.DataFrame):
@@ -28,7 +29,25 @@ def create_daily_data(data: pd.DataFrame):
 
 
 def create_weather_data(data: pd.DataFrame):
-    pass
+    mean_user_by_weather = data.groupby(by=["weathersit"], observed=True).agg({
+        "cnt": "mean",
+    }).reset_index()
+    return mean_user_by_weather
+
+
+def create_weather_plot(data: pd.DataFrame):
+    fig, ax = plt.subplots(figsize=(16, 8))
+    sns.barplot(x='weathersit', y='cnt', data=data)
+    ax.set_ylabel("Average User Count")
+    return fig
+
+
+def create_segmented_user_plot(data: pd.DataFrame):
+    fig, ax = plt.subplots(figsize=(16, 8))
+    sns.barplot(x='year', y='registered', data=data, label='Registered Users', color='#90CAF1', errorbar=None)
+    sns.barplot(x='year', y='casual', data=data, label='Casual Users', color='#E9967A')
+    ax.set_ylabel("Bike Sharing User Count")
+    return fig
 
 
 def create_segmented_avg_user_growth(data: pd.DataFrame):
