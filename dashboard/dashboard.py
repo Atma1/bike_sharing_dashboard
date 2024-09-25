@@ -42,7 +42,7 @@ with tab1:
 
         transformed_data = transformed_data[(transformed_data["date"] >= str(start_date)) &
                                             (transformed_data["date"] <= str(end_date))]
-        first_user_count = int(transformed_data["cnt"][0])
+        first_user_count = int(transformed_data["cnt"].iloc[0])
         last_user_count = int(transformed_data["cnt"].iloc[-1])
 
         st.metric(label="Total user:",
